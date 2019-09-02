@@ -34,11 +34,16 @@ public class EarthquakeLoader extends AsyncTaskLoader<List<Earthquake>> {
         mUrl = url;
     }
 
+    @Override
+    protected void onStartLoading() {
+        forceLoad();
+    }
+
     /**
      * This is on a background thread.
      */
     @Override
-    public ArrayList<Earthquake> loadInBackground() {
+    public List<Earthquake> loadInBackground() {
         if (mUrl == null) {
             return null;
         }
@@ -55,7 +60,7 @@ public class EarthquakeLoader extends AsyncTaskLoader<List<Earthquake>> {
         }
 
         // Perform the network request, parse the response, and extract a list of earthquakes.
-        ArrayList<Earthquake> earthquakes = QueryUtils.extractEarthquakes(jsonResponse);
+        List<Earthquake> earthquakes = QueryUtils.extractEarthquakes(jsonResponse);
         return earthquakes;
     }
 
